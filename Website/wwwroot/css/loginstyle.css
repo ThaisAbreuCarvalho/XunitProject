@@ -2,14 +2,96 @@
     background-color: #000;
 }
 
-.yellow-gym-background {
-    background-color: #E6D111;
+.green-gym-background {
+    background-color: #6bd50a;
 }
 
-.yellow-gym-text {
-    color: #E6D111;
+.green-gym-text {
+    color: #6bd50a;
+    font-family: Lucida Handwriting, sans-serif;
+}
+
+.gym-textalign-center {
+    padding-top: 1%;
+    text-align: center;
+}
+
+.align-items-center{
+     align-content: center;
+}
+
+.title-gym {
+    text-align: center;
+    padding-top: 2%;
+    font-size: 4em;
+    font-weight: bolder;
 }
 
 .black-text {
     color: #000;
+}
+
+.max-width-woman {
+    max-width: 100%;
+    margin-left: -10%;
+}
+
+.max-width-man {
+    max-width: 120%;
+    margin-left: 15%;
+}
+
+.divinline{
+    display: inline-block;
+    max-width: 45%;
+}
+
+input.input-login-form::placeholder {
+    color: white;
+    padding-left: 5%;
+    font-size: 20px;
+}
+
+.form-div {
+    position: absolute;
+    top: 42%;
+    left: 38%;
+}
+
+input.input-login-form {
+    background: #60952fb0;
+    color: #000;
+    max-width: 150%;
+    margin-bottom: 5%;
+    border-radius: 15px;
+    max-height: 150%;
+    height: 45px;
+    width: 322px;
+    border: 1px;
+    border-color: #6bd50a;
+}
+
+form.login-form {
+    align-content: center;
+}
+
+.mojo {
+    position: absolute;
+    top: 77%;
+    left: 30%;
+}
+
+.btn-login-external.green-gym-background {
+    height: 48px;
+    border-radius: 30px;
+    width: 180px;
+    margin-left: 20%;
+    margin-top: 2%;
+}
+
+button.login-btn {
+    background: #6bd50a;
+    margin: 4% 1% 1% 5%;
+    padding: 2% 30% 2% 30%;
+    border-radius: 25px;
 }

@@ -3,8 +3,8 @@ Project to practice Xunit course habilities and riches domain modeling course.
 You can found the courses at udemy https://www.udemy.com/course/automatizando-testes-para-sua-aplicacao/learn/lecture/9402660#overview
 and balta.io https://balta.io/player/assistir/5c350f62-e717-9a7d-1241-702a00000000, https://balta.io/player/assistir/5d081362-fb6f-c00e-79ab-8a9b00000000
 
-The initial idea is to build a system focusing on a gym business in which is gonna be possible to register a new gym member
-also enroll him/her in a modality, to add a gym plan of development, change its gym schedule and maybe check the payments.
+The initial idea is to build a system focusing on a gym business, in which is gonna be possible to register a new gym member
+also enroll him/her in a modality, to add a gym plan of development, change the memmbers schedule and maybe check the payments.
 But the focus here is to do it in TDD so while we build we also write tests to our application.
 
 The project is divided in webapi, website and project tests.

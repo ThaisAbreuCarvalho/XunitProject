@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -10,6 +11,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebApi.DTO;
+using WebApiDomain;
+using WebApiDomain.Automapper;
+using WebApiDomain.Interfaces;
+using WebApiDomain.Interfaces.Logic;
 
 namespace WebApi
 {
@@ -27,6 +33,21 @@ namespace WebApi
         {
 
             services.AddControllers();
+
+            var mapperConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new AcessTokenAutomapper());
+            });
+
+            IMapper mapper = mapperConfig.CreateMapper();
+
+            services.AddSingleton(mapper);
+
+            services.AddMvc();
+
+            //logic
+            services.AddScoped<ILoginLogic, LoginLogic>();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebApi", Version = "v1" });

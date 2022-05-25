@@ -7,5 +7,8 @@ namespace WebApi.DTO
 {
     public class AccessTokenResponse
     {
+        public string Token { get; set; }
+        public string ExpirationTime { get; set; }
+        public string Type { get; set; }
     }
 }

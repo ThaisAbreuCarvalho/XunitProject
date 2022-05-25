@@ -12,11 +12,9 @@ namespace WebApi.Controllers
     [Route("api/[controller]")]
     public class LoginController : ControllerBase
     {
-        private readonly ILogger _logger;
         private readonly ILoginLogic _loginLogic;
-        public LoginController(ILogger logger, ILoginLogic loginLogic)
+        public LoginController(ILoginLogic loginLogic)
         {
-            _logger = logger;
             _loginLogic = loginLogic;
         }
 

@@ -8,7 +8,7 @@ and balta.io <a href="https://balta.io/player/assistir/5c350f62-e717-9a7d-1241-7
 <p>
   The initial idea is to build a system focusing on a gym business in which is gonna be possible to register a new gym member
 also enroll him/her in a modality, to add a gym plan of development, change its gym schedule and maybe check the payments.
-But the focus here is to do it in TDD so while we build we also write tests to our application.
+But the focus here is to do it in TDD so while we build we also write tests to our application, we also use fluent validator and some auth knowledge.
 </p>
 
 The project is divided in webapi, website and project tests.

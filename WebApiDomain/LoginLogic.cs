@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using System.Threading.Tasks;
 using WebApi.DTO;
+using WebApiDomain.DTO;
 using WebApiDomain.Interfaces.Logic;
 using WebApiDomain.Model;
 
@@ -15,9 +16,18 @@ namespace WebApiDomain
             _mapper = mapper;
         }
 
-        public Task<AccessTokenResponse> GetAccessTokenAsync(AccessTokenRequest request)
+        public async Task<Result<AccessTokenResponse>> GetAccessTokenAsync(WebApi.DTO.AccessTokenRequest request)
         {
-            var accessTokenRequest = _mapper.Map<AccessToken>(request);
+            var result = new Result<AccessTokenResponse>();
+            var accessTokenRequest = _mapper.Map<Model.AccessTokenRequest>(request);
+            var validate = await accessTokenRequest.IsValid().ConfigureAwait(false);
+
+            if (!validate.IsValid)
+            {
+                validate.Errors.ForEach(x => result.ErrorMessages.Add(x.ErrorMessage));
+                return result;
+            }
+
 
             return null;
         }

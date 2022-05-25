@@ -1,20 +1,12 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using WebApi.DTO;
 using WebApiDomain;
 using WebApiDomain.Automapper;
-using WebApiDomain.Interfaces;
 using WebApiDomain.Interfaces.Logic;
 
 namespace WebApi
@@ -36,7 +28,7 @@ namespace WebApi
 
             var mapperConfig = new MapperConfiguration(mc =>
             {
-                mc.AddProfile(new AcessTokenAutomapper());
+                mc.AddProfile(new AccessTokenAutomapper());
             });
 
             IMapper mapper = mapperConfig.CreateMapper();

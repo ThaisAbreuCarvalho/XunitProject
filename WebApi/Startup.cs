@@ -1,10 +1,10 @@
-using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using System.Reflection;
 using WebApiDomain;
 using WebApiDomain.Automapper;
 using WebApiDomain.Interfaces.Logic;
@@ -26,17 +26,10 @@ namespace WebApi
 
             services.AddControllers();
 
-            var mapperConfig = new MapperConfiguration(mc =>
-            {
-                mc.AddProfile(new AccessTokenAutomapper());
-            });
-
-            IMapper mapper = mapperConfig.CreateMapper();
-
-            services.AddSingleton(mapper);
+            services.AddAutoMapper(typeof(AccessTokenAutomapper));
 
             services.AddMvc();
-
+            
             //logic
             services.AddScoped<ILoginLogic, LoginLogic>();
 

@@ -42,13 +42,20 @@ namespace ProjectTests.DomainTests
 
         [Theory(DisplayName = "ShouldNotAcceptInvalidUserEmail")]
         [InlineData(null)]
+        [InlineData("")]
         [InlineData("654653453")]
         [InlineData("asdfsdefwes")]
-        [InlineData("asdfsd5444564")]
         [InlineData("Select * from dbo.\"User\"")]
-        public void ShouldNotAcceptInvalidUserEmail(string userEmail)
+        [InlineData("user@")]
+        [InlineData("user.com")]
+        public async Task ShouldNotAcceptInvalidUserEmail(string userEmail)
         {
-            Assert.True(false);
+            var accessTokenRequest = new AccessTokenRequestBuilder().BuildValidAcessTokenRequest();
+            accessTokenRequest.UserName = userEmail;
+
+            var result = await _loginLogic.GetAccessTokenAsync(accessTokenRequest).ConfigureAwait(false);
+            var sucess = result.ErrorMessages.Contains("Invalid user email");
+            Assert.True(sucess);
         }
 
         [Fact(DisplayName = "ShouldAcceptValidUserEmail")]
@@ -70,8 +77,8 @@ namespace ProjectTests.DomainTests
             accessTokenRequest.Password = password;
 
             var result = await _loginLogic.GetAccessTokenAsync(accessTokenRequest).ConfigureAwait(false);
-
-            Assert.False(result.Sucess);
+            var sucess = result.ErrorMessages.Contains("Invalid password");
+            Assert.True(sucess);
         }
 
         [Fact(DisplayName = "ShouldAcceptValidUserPassword")]

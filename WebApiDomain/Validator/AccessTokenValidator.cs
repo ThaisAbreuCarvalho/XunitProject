@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using System.Linq;
 using WebApiDomain.Model;
 
 namespace WebApiDomain.Validator
@@ -7,13 +8,28 @@ namespace WebApiDomain.Validator
     {
         public AccessTokenValidator()
         {
-            RuleFor(x => x.UserName).NotEmpty().EmailAddress().WithMessage("Invalid user email");
-            RuleFor(x => x.Password).NotEmpty().Must(BeInValidFormat).WithMessage("Invalid password");
+            RuleFor(x => x.UserName)
+                .NotEmpty().WithMessage("Invalid user email")
+                .EmailAddress().WithMessage("Invalid user email");
+            RuleFor(x => x.Password)
+                .NotEmpty().WithMessage("Invalid password")
+                .Must(BeInValidFormat).WithMessage("Invalid password"); ;
         }
 
         public bool BeInValidFormat(string username)
         {
-            return true;
+            var result = true;
+
+            if (username != null)
+            {
+                if (username.Length != 8 ||
+                    username.All(char.IsDigit) || 
+                    username.All(char.IsLetter) || 
+                    username.Any(char.IsWhiteSpace))
+                    result = false; 
+            }
+
+            return result;
         }
     }
 }

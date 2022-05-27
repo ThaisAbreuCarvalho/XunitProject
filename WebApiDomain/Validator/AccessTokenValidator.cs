@@ -8,7 +8,7 @@ namespace WebApiDomain.Validator
     {
         public AccessTokenValidator()
         {
-            RuleFor(x => x.UserName)
+            RuleFor(x => x.UserEmail)
                 .NotEmpty().WithMessage("Invalid user email")
                 .EmailAddress().WithMessage("Invalid user email");
             RuleFor(x => x.Password)

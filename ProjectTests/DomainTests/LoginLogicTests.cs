@@ -4,6 +4,7 @@ using ProjectTests.Builder;
 using System.Threading.Tasks;
 using WebApiDomain;
 using WebApiDomain.Automapper;
+using WebApiDomain.Interface.Repository;
 using Xunit;
 
 namespace ProjectTests.DomainTests
@@ -21,22 +22,26 @@ namespace ProjectTests.DomainTests
                 {
                     mc.AddProfile(new AccessTokenAutomapper());
                 });
+
                 IMapper mapper = mappingConfig.CreateMapper();
                 _mapper = mapper;
             }
 
-            _loginLogic = new LoginLogic(_mapper);
+            _loginLogic = new LoginLogic(_mapper, new Mock<IUserRepository>().Object);
         }
 
-        [Fact(DisplayName = "ShouldNotAcceptInvalidTokenRequest")]
-        public void ShouldNotAcceptInvalidTokenRequest()
+        [Fact(DisplayName = "ShouldNotReturnTokenWhenRequestIsValid")]
+        public void ShouldNotReturnTokenWhenRequestIsValid()
         {
             Assert.True(false);
         }
 
-        [Fact(DisplayName = "ShouldAcceptValidTokenRequest")]
-        public void ShouldAcceptValidTokenRequest()
+        [Fact(DisplayName = "ShouldReturnTokenWhenRequestIsValid")]
+        public async Task ShouldReturnTokenWhenRequestIsValid()
         {
+            var accessTokenRequest = new AccessTokenBuilder().BuildValidAcessTokenRequest();
+            var result = await _loginLogic.GetAccessTokenAsync(accessTokenRequest).ConfigureAwait(false);
+
             Assert.True(false);
         }
 
@@ -50,18 +55,12 @@ namespace ProjectTests.DomainTests
         [InlineData("user.com")]
         public async Task ShouldNotAcceptInvalidUserEmail(string userEmail)
         {
-            var accessTokenRequest = new AccessTokenRequestBuilder().BuildValidAcessTokenRequest();
-            accessTokenRequest.UserName = userEmail;
+            var accessTokenRequest = new AccessTokenBuilder().BuildValidAcessTokenRequest();
+            accessTokenRequest.UserEmail = userEmail;
 
             var result = await _loginLogic.GetAccessTokenAsync(accessTokenRequest).ConfigureAwait(false);
             var sucess = result.ErrorMessages.Contains("Invalid user email");
             Assert.True(sucess);
-        }
-
-        [Fact(DisplayName = "ShouldAcceptValidUserEmail")]
-        public void ShouldAcceptValidUserEmail()
-        {
-            Assert.True(false);
         }
 
         [Theory(DisplayName = "ShouldNotAcceptInvalidUserPassword")]
@@ -73,7 +72,7 @@ namespace ProjectTests.DomainTests
         [InlineData("Select * from dbo.\"Users\"")]
         public async Task ShouldNotAcceptInvalidUserPassword(string password)
         {
-            var accessTokenRequest = new AccessTokenRequestBuilder().BuildValidAcessTokenRequest();
+            var accessTokenRequest = new AccessTokenBuilder().BuildValidAcessTokenRequest();
             accessTokenRequest.Password = password;
 
             var result = await _loginLogic.GetAccessTokenAsync(accessTokenRequest).ConfigureAwait(false);
@@ -81,10 +80,12 @@ namespace ProjectTests.DomainTests
             Assert.True(sucess);
         }
 
-        [Fact(DisplayName = "ShouldAcceptValidUserPassword")]
-        public void ShouldAcceptValidUserPassword()
+        [Fact(DisplayName = "ShouldAcceptValidUserCredentials")]
+        public async Task ShouldAcceptValidUserCredentials()
         {
-            Assert.True(false);
+            var accessTokenRequest = new AccessTokenBuilder().BuildValidAcessTokenRequest();
+            var result = await _loginLogic.GetAccessTokenAsync(accessTokenRequest).ConfigureAwait(false);
+            Assert.True(result.Sucess);
         }
     }
 }

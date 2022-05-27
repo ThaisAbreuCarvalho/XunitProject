@@ -4,10 +4,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using System.Reflection;
 using WebApiDomain;
 using WebApiDomain.Automapper;
+using WebApiDomain.Interface.Repository;
 using WebApiDomain.Interfaces.Logic;
+using WebApiDomain.Interfaces.Repository;
+using WebApiRepository;
 
 namespace WebApi
 {
@@ -32,6 +34,10 @@ namespace WebApi
             
             //logic
             services.AddScoped<ILoginLogic, LoginLogic>();
+
+            //repository
+            services.AddSingleton<IUserRepository, UserRepository>();
+            services.AddSingleton<IAppConfiguration, AppConfiguration>();
 
             services.AddSwaggerGen(c =>
             {

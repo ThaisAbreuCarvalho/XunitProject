@@ -50,7 +50,7 @@ namespace WebApiDomain
 
             try
             {
-                _userRepository.teste();
+                _userRepository.GetAsync(new User { Name = "Thais" });
             }
             catch (Exception e)
             {

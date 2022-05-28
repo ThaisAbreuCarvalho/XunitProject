@@ -1,6 +1,9 @@
-﻿namespace WebApiDomain.Interface.Repository
+﻿using WebApiDomain.Entity;
+using WebApiDomain.Interfaces.Repository;
+
+namespace WebApiDomain.Interface.Repository
 {
-    public interface IUserRepository
+    public interface IUserRepository : IRepository<User>
     {
         public void teste();
     }

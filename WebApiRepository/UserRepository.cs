@@ -1,22 +1,22 @@
-﻿using WebApiDomain.Interface.Repository;
+﻿using System.Data;
+using WebApiDomain.Interface.Repository;
 using WebApiDomain.Interfaces.Repository;
+using Dapper;
+using System.Data.SqlClient;
+using WebApiDomain.Entity;
+using System.Linq;
 
 namespace WebApiRepository
 {
-    public class UserRepository : IUserRepository
+    public class UserRepository : Repository<User>, IUserRepository
     {
-        private readonly IAppConfiguration _appConfig;
-        private readonly string _connection;
-
-        public UserRepository(IAppConfiguration appConfiguration)
+        public UserRepository(IAppConfiguration configuration) : base(configuration)
         {
-            _appConfig = appConfiguration;
-            _connection = _appConfig.GetProperty("ConnectionStrings:secret");
         }
 
         public void teste()
         {
-            var teste = _connection;
+            var teste = _dbConnection.Query<User>("Select * from [dbo].[User];").ToList();
         }
     }
 }

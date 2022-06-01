@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using WebApi.DTO;
 using WebApiDomain.DTO;
@@ -50,7 +52,8 @@ namespace WebApiDomain
 
             try
             {
-                _userRepository.GetAsync(new User { Name = "Thais" });
+                await _userRepository.InsertAsync(new List<User> {
+                   new User { Name = "Teste1", Surname = "Carvalho" }, new User { Name = "Teste2", Surname = "Carvalho" } }).ConfigureAwait(false);
             }
             catch (Exception e)
             {

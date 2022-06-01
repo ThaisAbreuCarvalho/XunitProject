@@ -1,4 +1,6 @@
-﻿Create Database LifeBalance;
+﻿Create  Database LifeBalance;
+
+Drop Table IF Exists [dbo].[User];
 
 Create Table [dbo].[User] (
   [Id] int identity not null,

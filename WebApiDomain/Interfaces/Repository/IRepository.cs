@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace WebApiDomain.Interfaces.Repository
 {
     public interface IRepository<T>
     {
-        List<T> GetAsync(T entity);
-        List<int> InsertAsync(List<T> entity);
-        int InsertAsync(T entity);
-        int DeleteAsync(T entity);
-        void UpdateAsync(T entity);
+        Task<List<T>> SelectAsync(T entity);
+        Task InsertAsync(List<T> entity);
+        Task<int> InsertAsync(T entity);
+        Task DeleteAsync(T entity);
+        Task UpdateAsync(T entity);
     }
 }

@@ -4,10 +4,12 @@ using System.Data.SqlClient;
 using WebApiDomain.Interfaces.Repository;
 using Dapper;
 using System.Linq;
+using WebApiRepository.Utilities;
+using System.Threading.Tasks;
 
 namespace WebApiRepository
 {
-    public class Repository<T> : IRepository<T>
+    public abstract class Repository<T> : IRepository<T>
     {
         private readonly IAppConfiguration _appConfig;
         private readonly string _connection;
@@ -20,29 +22,34 @@ namespace WebApiRepository
             _dbConnection = new SqlConnection(_connection);
         }
 
-        public int DeleteAsync(T entity)
+        public async Task DeleteAsync(T entity)
         {
-            throw new System.NotImplementedException();
+            var query = QueriesHelper<T>.Delete(entity);
+            await _dbConnection.QueryAsync<T>(query).ConfigureAwait(false);
         }
 
-        public List<T> GetAsync(T entity)
+        public async Task<List<T>> SelectAsync(T entity)
         {
-            return _dbConnection.Query<T>("").ToList();
+            var query = await _dbConnection.QueryAsync<T>(QueriesHelper<T>.Select(entity)).ConfigureAwait(false);
+            return query.ToList();
         }
 
-        public List<int> InsertAsync(List<T> entity)
+        public async Task InsertAsync(List<T> entity)
         {
-            throw new System.NotImplementedException();
+            var query = QueriesHelper<T>.Insert(entity);
+            await _dbConnection.ExecuteAsync(query).ConfigureAwait(false);
         }
 
-        public int InsertAsync(T entity)
+        public async Task<int> InsertAsync(T entity)
         {
-            throw new System.NotImplementedException();
+            var query = QueriesHelper<T>.Insert(entity);
+            return await _dbConnection.QuerySingleAsync<int>(query).ConfigureAwait(false);
         }
 
-        public void UpdateAsync(T entity)
+        public async Task UpdateAsync(T entity)
         {
-            throw new System.NotImplementedException();
+            var query = QueriesHelper<T>.Update(entity);
+            await _dbConnection.QueryAsync<T>(query).ConfigureAwait(false);
         }
     }
 }

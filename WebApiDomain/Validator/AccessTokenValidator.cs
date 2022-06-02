@@ -16,17 +16,17 @@ namespace WebApiDomain.Validator
                 .Must(BeInValidFormat).WithMessage("Invalid password"); ;
         }
 
-        public bool BeInValidFormat(string username)
+        private bool BeInValidFormat(string password)
         {
             var result = true;
 
-            if (username != null)
+            if (password != null)
             {
-                if (username.Length != 8 ||
-                    username.All(char.IsDigit) || 
-                    username.All(char.IsLetter) || 
-                    username.Any(char.IsWhiteSpace))
-                    result = false; 
+                if (password.Length > 12 ||
+                    password.All(char.IsDigit) ||
+                    password.All(char.IsLetter) ||
+                    password.Any(char.IsWhiteSpace))
+                    result = false;
             }
 
             return result;

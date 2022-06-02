@@ -30,10 +30,15 @@ namespace ProjectTests.DomainTests
             _loginLogic = new LoginLogic(_mapper, new Mock<IUserRepository>().Object);
         }
 
-        [Fact(DisplayName = "ShouldNotReturnTokenWhenRequestIsValid")]
-        public void ShouldNotReturnTokenWhenRequestIsValid()
+        [Fact(DisplayName = "ShouldNotReturnTokenWhenRequestInvalid")]
+        public async Task ShouldNotReturnTokenWhenRequestIsValid()
         {
-            Assert.True(false);
+            var accessTokenRequest = new AccessTokenBuilder().BuildInvalidAcessTokenRequest();
+
+            var result = await _loginLogic.GetAccessTokenAsync(accessTokenRequest).ConfigureAwait(false);
+            var sucess = result.ErrorMessages.Contains("User register not found") && result.Response == null;
+
+            Assert.True(sucess);
         }
 
         [Fact(DisplayName = "ShouldReturnTokenWhenRequestIsValid")]
@@ -60,6 +65,7 @@ namespace ProjectTests.DomainTests
 
             var result = await _loginLogic.GetAccessTokenAsync(accessTokenRequest).ConfigureAwait(false);
             var sucess = result.ErrorMessages.Contains("Invalid user email");
+
             Assert.True(sucess);
         }
 
@@ -77,6 +83,7 @@ namespace ProjectTests.DomainTests
 
             var result = await _loginLogic.GetAccessTokenAsync(accessTokenRequest).ConfigureAwait(false);
             var sucess = result.ErrorMessages.Contains("Invalid password");
+
             Assert.True(sucess);
         }
 
@@ -86,6 +93,12 @@ namespace ProjectTests.DomainTests
             var accessTokenRequest = new AccessTokenBuilder().BuildValidAcessTokenRequest();
             var result = await _loginLogic.GetAccessTokenAsync(accessTokenRequest).ConfigureAwait(false);
             Assert.True(result.Sucess);
+        }
+
+        [Fact(DisplayName = "InactiveUserShouldNotHaveAccess")]
+        public async Task InactiveUserShouldNotHaveAccess()
+        {
+            Assert.True(false);
         }
     }
 }

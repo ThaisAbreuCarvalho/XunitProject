@@ -23,7 +23,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApiDomain", "WebApiDomai
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Repository", "Repository", "{539D5EA7-4930-4DEE-B8BF-FF2406641DB8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApiRepository", "WebApiRepository\WebApiRepository.csproj", "{9AABC9C3-9B83-44E4-97B8-9197D4A03ED8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApiRepository", "WebApiRepository\WebApiRepository.csproj", "{9AABC9C3-9B83-44E4-97B8-9197D4A03ED8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

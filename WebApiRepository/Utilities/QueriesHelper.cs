@@ -31,6 +31,11 @@ namespace WebApiRepository.Utilities
             {
                 if (field.GetValue(entity) != null && field.PropertyType.Name.ToLower() == "string" && field.Name != "Id")
                     criteria.AppendLine($" '{field.GetValue(entity)}', ");
+                else if (field.GetValue(entity) != null && field.PropertyType.Name.ToLower() == "boolean")
+                {
+                    var value = field.GetValue(entity).ToString() == "true" ? 1 : 0;
+                    criteria.AppendLine($" {value}, ");
+                }
                 else if (field.GetValue(entity) != null && field.Name != "Id")
                     criteria.AppendLine($" {field.GetValue(entity)}, ");
             }
@@ -51,14 +56,22 @@ namespace WebApiRepository.Utilities
             StringBuilder criteria = new StringBuilder();
             StringBuilder inserts = new StringBuilder();
 
-            foreach(var data in entity)
+            foreach (var data in entity)
             {
                 foreach (var field in tableFields)
                 {
-                    if (field.GetValue(data) != null && field.PropertyType.Name.ToLower() == "string" && field.Name != "Id")
-                        criteria.AppendLine($" '{field.GetValue(data)}', ");
-                    else if (field.GetValue(data) != null && field.Name != "Id")
-                        criteria.AppendLine($" {field.GetValue(data)}, ");
+                    if (field.GetValue(data) != null)
+                    {
+                        if (field.PropertyType.Name.ToLower() == "string")
+                            criteria.AppendLine($" '{field.GetValue(data)}', ");
+                        else if (field.PropertyType.Name.ToLower() == "boolean")
+                        {
+                            var value = field.GetValue(data).ToString() == "true" ? 1 : 0;
+                            criteria.AppendLine($" {value}, ");
+                        }
+                        else if (field.Name != "Id")
+                            criteria.AppendLine($" {field.GetValue(data)}, ");
+                    }
                 }
 
                 inserts.AppendLine($" ({criteria.ToString().Remove(criteria.ToString().LastIndexOf(", "))}), ");
@@ -86,7 +99,12 @@ namespace WebApiRepository.Utilities
 
                 if (field.GetValue(entity) != null && field.PropertyType.Name.ToLower() == "string")
                     criteria.AppendLine($"{field.Name} = '{field.GetValue(entity)}' and ");
-                else if(field.GetValue(entity) != null)
+                else if (field.GetValue(entity) != null && field.PropertyType.Name.ToLower() == "boolean")
+                {
+                    var value = field.GetValue(entity).ToString() == "true" ? 1 : 0;
+                    criteria.AppendLine($"{field.Name} = {value} and");
+                }
+                else if (field.GetValue(entity) != null)
                     criteria.AppendLine($"{field.Name} = {field.GetValue(entity)} and ");
             }
 
@@ -123,6 +141,11 @@ namespace WebApiRepository.Utilities
             {
                 if (field.GetValue(entity) != null && field.PropertyType.Name.ToLower() == "string" && field.Name != "Id")
                     criteria.AppendLine($"{field.Name} = '{field.GetValue(entity)}', ");
+                else if (field.GetValue(entity) != null && field.PropertyType.Name.ToLower() == "boolean")
+                {
+                    var value = field.GetValue(entity).ToString() == "true" ? 1 : 0;
+                    criteria.AppendLine($"{field.Name} = {value}, ");
+                }
                 else if (field.GetValue(entity) != null && field.Name != "Id")
                     criteria.AppendLine($"{field.Name} = {field.GetValue(entity)}, ");
             }

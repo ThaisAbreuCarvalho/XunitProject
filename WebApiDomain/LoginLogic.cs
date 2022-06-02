@@ -35,32 +35,23 @@ namespace WebApiDomain
                 return result;
             }
 
-            var userValidated = await GetUser(accessTokenRequest.UserEmail, accessTokenRequest.Password).ConfigureAwait(false);
-
-            if (!userValidated.Sucess)
+            var user = await GetUser(accessTokenRequest.UserEmail, accessTokenRequest.Password).ConfigureAwait(false);
+            user = new User { Name = "Thais", Password = "fsf4ds554" };
+            if (user == null)
             {
-                result.ErrorMessages.AddRange(userValidated.ErrorMessages);
+                result.ErrorMessages.Add("User register not found.");
                 return result;
             }
+
+            result.Response = TokenGenerator.GenerateToken(user.Name, user.Password);
 
             return result;
         }
 
-        private async Task<Result<User>> GetUser(string email, string password)
+        private async Task<User> GetUser(string email, string password)
         {
-            var result = new Result<User>();
-
-            try
-            {
-                await _userRepository.InsertAsync(new List<User> {
-                   new User { Name = "Teste1", Surname = "Carvalho" }, new User { Name = "Teste2", Surname = "Carvalho" } }).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                result.ErrorMessages.AddRange(ErrorFormatter.FormatException(e));
-            }
-
-            return result;
+            var user = await _userRepository.SelectAsync(new User { Email = email, Password = password }).ConfigureAwait(false);
+            return user?.FirstOrDefault();
         }
     }
 }

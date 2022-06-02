@@ -19,7 +19,7 @@ namespace ProjectTests.Builder
             return new AccessTokenRequest
             {
                 UserEmail = _faker.Person.Email,
-                Password = _faker.Random.AlphaNumeric(7) + "*",
+                Password = _faker.Random.AlphaNumeric(11) + "*",
             };
         }
 
@@ -27,8 +27,8 @@ namespace ProjectTests.Builder
         {
             return new AccessTokenRequest
             {
-                UserEmail = "",
-                Password = _faker.Random.AlphaNumeric(9)
+                UserEmail = "asda @dasda",
+                Password = _faker.Random.AlphaNumeric(15)
             };
         }
 

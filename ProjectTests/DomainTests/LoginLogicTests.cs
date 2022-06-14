@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using WebApiDomain;
 using WebApiDomain.Automapper;
 using WebApiDomain.Interface.Repository;
+using WebApiDomain.Interfaces.Services;
 using Xunit;
 
 namespace ProjectTests.DomainTests
@@ -27,7 +28,10 @@ namespace ProjectTests.DomainTests
                 _mapper = mapper;
             }
 
-            _loginLogic = new LoginLogic(_mapper, new Mock<IUserRepository>().Object);
+            _loginLogic = new LoginLogic(
+                _mapper,
+                new Mock<IUserRepository>().Object,
+                new Mock<ITokenGenerator>().Object);
         }
 
         [Fact(DisplayName = "ShouldNotReturnTokenWhenRequestInvalid")]

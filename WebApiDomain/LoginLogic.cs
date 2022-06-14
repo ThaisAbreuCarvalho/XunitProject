@@ -8,6 +8,7 @@ using WebApiDomain.DTO;
 using WebApiDomain.Entity;
 using WebApiDomain.Interface.Repository;
 using WebApiDomain.Interfaces.Logic;
+using WebApiDomain.Interfaces.Services;
 using WebApiDomain.Utilities;
 
 namespace WebApiDomain
@@ -16,11 +17,12 @@ namespace WebApiDomain
     {
         private readonly IMapper _mapper;
         private readonly IUserRepository _userRepository;
-
-        public LoginLogic(IMapper mapper, IUserRepository userRepository)
+        private readonly ITokenGenerator _tokenGenerator;
+        public LoginLogic(IMapper mapper, IUserRepository userRepository, ITokenGenerator tokenGenerator)
         {
             _mapper = mapper;
             _userRepository = userRepository;
+            _tokenGenerator = tokenGenerator;
         }
 
         public async Task<Result<AccessTokenResponse>> GetAccessTokenAsync(WebApi.DTO.AccessTokenRequest request)
@@ -36,14 +38,14 @@ namespace WebApiDomain
             }
 
             var user = await GetUser(accessTokenRequest.UserEmail, accessTokenRequest.Password).ConfigureAwait(false);
-            user = new User { Name = "Thais", Password = "fsf4ds554" };
+           
             if (user == null)
             {
                 result.ErrorMessages.Add("User register not found.");
                 return result;
             }
 
-            result.Response = TokenGenerator.GenerateToken(user.Name, user.Password);
+            result.Response = _tokenGenerator.GenerateToken(user.Name, user.Password);
 
             return result;
         }

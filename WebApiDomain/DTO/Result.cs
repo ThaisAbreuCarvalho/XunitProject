@@ -11,6 +11,6 @@ namespace WebApiDomain.DTO
         public List<string> ErrorMessages { get; set; } = new List<string>();
         public virtual bool Sucess => !ErrorMessages.Any();
 
-        public T Response;
+        public T Response { get; set; }
     }
 }

@@ -10,6 +10,5 @@ namespace WebApi.DTO
         public string Token { get; set; }
         public string ExpirationTime { get; set; }
         public string Type { get; set; }
-        public string RefreshToken { get; set; }
     }
 }

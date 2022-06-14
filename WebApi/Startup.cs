@@ -9,6 +9,8 @@ using WebApiDomain.Automapper;
 using WebApiDomain.Interface.Repository;
 using WebApiDomain.Interfaces.Logic;
 using WebApiDomain.Interfaces.Repository;
+using WebApiDomain.Interfaces.Services;
+using WebApiDomain.Utilities;
 using WebApiRepository;
 
 namespace WebApi
@@ -38,6 +40,7 @@ namespace WebApi
             //repository
             services.AddSingleton<IUserRepository, UserRepository>();
             services.AddSingleton<IAppConfiguration, AppConfiguration>();
+            services.AddSingleton<ITokenGenerator, TokenGenerator>();
 
             services.AddSwaggerGen(c =>
             {
